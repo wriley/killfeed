@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" ng-app="killfeedApp">
+<head>
+    <meta charset="utf-8">
+    <title>Kill Feed</title>
+    <script src="js/angular.js"></script>
+    <script src="js/controllers.js"></script>
+</head>
+<body ng-controller="killfeedController">
+<div ng-show="killfeedData.length == 0">
+Loading...
+</div>
+<div ng-repeat="killfeed in killfeedData track by $index">
+    <div ng-if="killfeed.killer == ''">
+        <span>{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> died near {{killfeed.weapon}}</span>
+    </div>
+    <div ng-if="killfeed.killer != ''">
+        <span>{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> hit by <strong>{{killfeed.killer}}</strong> using <em>{{killfeed.weapon}}</em> from {{killfeed.distance}}m</span>
+    </div>
+</div>
+</body>
+</html>
