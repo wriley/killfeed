@@ -63,8 +63,10 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                     $scope.addAlert("danger", "history.get failed with " + historyData.error.message + ": " + historyData.error.data);
                 } else {
                     //console.log(historyData);
+                    var lastVal;
                     for(var i = 0; i < historyData.result.length; i++) {
                         var val = historyData.result[i].value;
+                        if(val == lastVal) { continue; }
                         var time = "";
                         var killer = "";
                         var victim = "";
@@ -104,6 +106,8 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                         historyData.result[i].victim = victim;
                         historyData.result[i].weapon = weapon;
                         historyData.result[i].distance = distance;
+
+                        lastVal = val;
                     }
                     $scope.killfeedData = historyData.result;
                 }
