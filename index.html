@@ -3,14 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>Kill Feed</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <script src="js/angular.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
 </head>
 <body ng-controller="killfeedController">
+<div>
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+</div>
 <div ng-show="killfeedData.length == 0">
 Loading...
 </div>
-<div ng-repeat="killfeed in killfeedData track by $index">
+<div ng-repeat="killfeed in killfeedData track by $index" class="killfeed">
     <div ng-if="killfeed.killer == ''">
         <span>{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> died near {{killfeed.weapon}}</span>
     </div>

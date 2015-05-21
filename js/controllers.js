@@ -1,17 +1,19 @@
-var app = angular.module("killfeedApp", []);
+var app = angular.module("killfeedApp", ['ui.bootstrap']);
 
 app.controller("killfeedController", function($scope, $http, $interval) {
+//
 // CHANGEME
     $scope.api_url = "URL";
     $scope.api_user = "USER";
     $scope.api_pass = "PASS";
+    $scope.hostid = 10066;
+    $scope.itemid = 26932;
 //
 //
     $scope.auth = "";
     $scope.auth_id = "";
     $scope.killfeedData = [];
-    $scope.hostid = 10066;
-    $scope.itemid = 26932;
+    $scope.alerts = [];
 
     var login = function() {
         $scope.auth_id = Date.now();
@@ -26,9 +28,11 @@ app.controller("killfeedController", function($scope, $http, $interval) {
             "id": $scope.auth_id
         }).success(function (userData) {
             if (userData.error) {
-                console.log("user.login failed with " + userData.error.message + ": " + userData.error.data);
+                $scope.addAlert("danger", "user.login failed with " + userData.error.message + ": " + userData.error.data);
             }  else {
                 $scope.auth = userData.result;
+                fetch();
+                $interval(fetch, 10000);
             }
         });
     };
@@ -56,7 +60,7 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                 "id": $scope.auth_id
             }).success(function (historyData) {
                 if(historyData.error) {
-                    console.log("history.get failed with " + historyData.error.message + ": " + historyData.error.data);
+                    $scope.addAlert("danger", "history.get failed with " + historyData.error.message + ": " + historyData.error.data);
                 } else {
                     //console.log(historyData);
                     for(var i = 0; i < historyData.result.length; i++) {
@@ -107,15 +111,14 @@ app.controller("killfeedController", function($scope, $http, $interval) {
         }
     };
 
-    function sleep(milliseconds) {
-        var start = new Date().getTime();
-        for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds){
-                break;
-            }
-        }
+    $scope.addAlert = function(type, msg) {
+        var alert = {type: type, msg: msg};
+        $scope.alerts.push(alert);
     }
 
-    fetch();
-    $interval(fetch, 2000);
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    }
+
+    login();
 });
