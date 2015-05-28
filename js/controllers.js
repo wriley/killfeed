@@ -52,7 +52,7 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                     "output": "extend",
                     "history": 2,
                     "itemids": $scope.itemid,
-                    "limit": 10,
+                    "limit": 40,
                     "sortfield": "clock",
                     "sortorder": "DESC",
                 },
@@ -74,7 +74,8 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                         var distance = "";
 
                         if(val.indexOf(" hit by ") >= 0) {
-                            var hitby_re = /^\s?(\d+:\d+:\d+) .*(\(.*\)) hit by PID#\d(\(.*\)) with (\w+)\/.* from (\d+) meters/;
+                            // 23:29:51 "P1ayer PID#4(Matt KT (Hero)) hit by PID#1(Taras Hujer) with M16A2/B_556x45_Ball <ammo left:30> from 3 meters"
+                            var hitby_re = /^\s?(\d+:\d+:\d+) .*PID#\d+(\(.*\)) hit by PID#\d+(\(.*\)) with (\w+)\/.* from (\d+) meters/;
                             var pieces = hitby_re.exec(val);
                             if(pieces) {
                                 pieces[2] = pieces[2].replace("(","");
@@ -90,7 +91,7 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                         }
 
                         if(val.indexOf(" died at ") >= 0) {
-                            var diedat_re = /^\s?(\d+:\d+:\d+) .*(\(.*\)) as .* died at (\w+)/;
+                            var diedat_re = /^\s?(\d+:\d+:\d+) .*PID#\d+(\(.*\)) as .* died at (\w+)/;
                             var pieces = diedat_re.exec(val);
                             if(pieces) {
                                 pieces[2] = pieces[2].replace("(","");
