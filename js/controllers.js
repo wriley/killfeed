@@ -91,7 +91,8 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                         }
 
                         if(val.indexOf(" died at ") >= 0) {
-                            var diedat_re = /^\s?(\d+:\d+:\d+) .*PID#\d+(\(.*\)) as .* died at (\w+)/;
+                            // 16:00:26 "Player UID#76561197989990619 CID#1084 PID#4(Scrapyard) as Camo1_DZ died at Green Mountain [37:93]"
+                            var diedat_re = /^\s?(\d+:\d+:\d+) .*PID#\d+(\(.*\)) as .* died at (.*) \[/;
                             var pieces = diedat_re.exec(val);
                             if(pieces) {
                                 pieces[2] = pieces[2].replace("(","");
@@ -107,6 +108,7 @@ app.controller("killfeedController", function($scope, $http, $interval) {
                         historyData.result[i].victim = victim;
                         historyData.result[i].weapon = weapon;
                         historyData.result[i].distance = distance;
+                        historyData.result[i].raw = val;
 
                         lastVal = val;
                     }
