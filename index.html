@@ -18,10 +18,10 @@ Loading...
 </div>
 <div ng-repeat="killfeed in killfeedData track by $index" class="killfeed">
     <div ng-if="killfeed.killer == '' && killfeed.victim != ''">
-        <span>{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> died near {{killfeed.weapon}}</span>
+        <span class="died">{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> died near {{killfeed.weapon}}</span>
     </div>
     <div ng-if="killfeed.killer != '' && killfeed.distance >= 0">
-        <span>{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> hit by <strong>{{killfeed.killer}}</strong> using <em>{{killfeed.weapon}}</em> from {{killfeed.distance}}m</span>
+        <span class="hit">{{killfeed.time}} - <strong>{{killfeed.victim}}</strong> hit by <strong>{{killfeed.killer}}</strong> using <em>{{killfeed.weapon}}</em> from {{killfeed.distance}}m</span>
     </div>
 </div>
 </body>

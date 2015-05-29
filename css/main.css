@@ -1,3 +1,7 @@
 div.killfeed {
     padding-left: 4px;
 }
+
+span.died {
+    color: #ff0000;
+}
